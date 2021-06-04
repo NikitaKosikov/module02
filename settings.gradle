@@ -1,0 +1,5 @@
+rootProject.name = 'module#2'
+include 'persistence'
+include 'model'
+include 'web'
+
