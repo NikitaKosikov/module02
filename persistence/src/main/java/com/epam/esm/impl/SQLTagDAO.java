@@ -4,7 +4,9 @@ import com.epam.esm.Tag;
 import com.epam.esm.TagDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SQLTagDAO implements TagDAO {
 
     private static final String DB_NAME = "name";
@@ -14,8 +16,12 @@ public class SQLTagDAO implements TagDAO {
     private static final String DELETE_TAG_BY_ID = "DELETE FROM tag WHERE id=?";
     private static final String FIND_ALL_TAG = "DELETE FROM tag WHERE id=?";
 
+    private final JdbcTemplate jdbcTemplate;
+
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    public SQLTagDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public void insert(String name) {
