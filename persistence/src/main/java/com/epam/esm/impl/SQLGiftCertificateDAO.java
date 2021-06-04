@@ -4,11 +4,13 @@ import com.epam.esm.GiftCertificate;
 import com.epam.esm.GiftCertificateDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+@Component
 public class SQLGiftCertificateDAO implements GiftCertificateDAO {
 
     private static final String FIND_ALL_GIFT_CERTIFICATE = "SELECT * FROM gift_certificate";
