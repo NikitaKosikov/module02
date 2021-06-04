@@ -17,4 +17,5 @@ dependencies {
     implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.12.RELEASE'
     implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.7'
     implementation project(':model')
+    implementation project(':persistence')
 }
