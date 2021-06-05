@@ -2,6 +2,7 @@ package com.epam.esm.impl;
 
 import com.epam.esm.GiftCertificate;
 import com.epam.esm.GiftCertificateDAO;
+import com.epam.esm.row_mapper.GiftCertificateRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -66,7 +67,7 @@ public class SQLGiftCertificateDAO implements GiftCertificateDAO {
 
     @Override
     public List<GiftCertificate> read() {
-        return jdbcTemplate.query(FIND_ALL_GIFT_CERTIFICATE, new BeanPropertyRowMapper<>(GiftCertificate.class));
+        return jdbcTemplate.query(FIND_ALL_GIFT_CERTIFICATE, new GiftCertificateRowMapper());
     }
 
     @Override
