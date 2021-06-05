@@ -1,5 +1,7 @@
 package com.epam.esm.config;
 
+import com.epam.esm.GiftCertificateDAO;
+import com.epam.esm.TagDAO;
 import com.epam.esm.impl.SQLGiftCertificateDAO;
 import com.epam.esm.impl.SQLTagDAO;
 import org.springframework.context.annotation.Bean;
@@ -30,12 +32,12 @@ public class PersistenceSpringConfig {
     }
 
     @Bean
-    public SQLGiftCertificateDAO beanSQLGiftCertificateDAO(){
+    public GiftCertificateDAO beanSQLGiftCertificateDAO(){
         return new SQLGiftCertificateDAO(beanJdbcTemplate());
     }
 
     @Bean
-    public SQLTagDAO beanSQLTagDAO(){
+    public TagDAO beanSQLTagDAO(){
         return new SQLTagDAO(beanJdbcTemplate());
     }
 
