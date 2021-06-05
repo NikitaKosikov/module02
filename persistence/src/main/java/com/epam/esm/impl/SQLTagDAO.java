@@ -15,7 +15,8 @@ public class SQLTagDAO implements TagDAO {
     private static final String INSERT_TAG = "INSERT INTO tag (name) VALUES (?)";
     private static final String UPDATE_TAG = "UPDATE tag SET name=? WHERE id=?";
     private static final String DELETE_TAG_BY_ID = "DELETE FROM tag WHERE id=?";
-    private static final String FIND_ALL_TAG = "DELETE FROM tag WHERE id=?";
+    private static final String FIND_ALL_TAG = "SELECT * FROM tag";
+    private static final String FIND_TAG_BY_ID = "SELECT * FROM tag WHERE id=?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -25,13 +26,13 @@ public class SQLTagDAO implements TagDAO {
     }
 
     @Override
-    public void insert(String name) {
-        jdbcTemplate.update(INSERT_TAG, name);
+    public void insert(Tag tag) {
+        jdbcTemplate.update(INSERT_TAG, tag.getName());
     }
 
     @Override
-    public void update(String name, int id) {
-        jdbcTemplate.update(UPDATE_TAG, name, id);
+    public void update(Tag tag, int id) {
+        jdbcTemplate.update(UPDATE_TAG, tag.getName(), id);
     }
 
     @Override
@@ -42,5 +43,11 @@ public class SQLTagDAO implements TagDAO {
     @Override
     public List<Tag> read() {
         return jdbcTemplate.query(FIND_ALL_TAG, new BeanPropertyRowMapper<>(Tag.class));
+    }
+
+    @Override
+    public Tag readById(int id) {
+        return jdbcTemplate.query(FIND_TAG_BY_ID,new Object[]{id},
+                new BeanPropertyRowMapper<>(Tag.class)).stream().findAny().orElse(null);
     }
 }
