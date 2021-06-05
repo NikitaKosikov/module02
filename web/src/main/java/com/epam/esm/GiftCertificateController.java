@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+
 @Controller
+@RequestMapping(value = "/giftCertificates")
 public class GiftCertificateController {
 
     private final GiftCertificateDAO giftCertificateDAO;
@@ -17,47 +20,48 @@ public class GiftCertificateController {
     public GiftCertificateController(@Qualifier("SQLGiftCertificateDAO") GiftCertificateDAO giftCertificateDAO) {
         this.giftCertificateDAO = giftCertificateDAO;
     }
-
-    @GetMapping("giftCertificates")
+//++
+    @GetMapping
     public String getAllGiftCertificates(Model model){
         List<GiftCertificate> giftCertificates = giftCertificateDAO.read();
-        model.addAttribute(giftCertificates);
+        model.addAttribute("gift_certificates", giftCertificates);
         return "show_gift_certificates";
     }
-
-    @PostMapping("/giftCertificates")
+//++
+    @PostMapping
     public String createGiftCertificate(@ModelAttribute GiftCertificate giftCertificate){
         giftCertificateDAO.insert(giftCertificate);
-        return "show_gift_certificates";
+        return "redirect:/giftCertificates/new";
     }
-
-    @GetMapping("/giftCertificates/new")
+//++
+    @GetMapping("/new")
     public String formForCreateGiftCertificate(){
-        return "form_create_gift_certificate";
+        return "/form_create_gift_certificate";
     }
-
-    @GetMapping("/giftCertificates/{id}/edit")
-    public String formForEditGiftCertificate(@PathVariable String id, Model model){
-        model.addAttribute("gift_certificate_id", id);
-        return "form_edit_gift_certificate";
+//++
+    @GetMapping("/{id}/edit")
+    public String formForEditGiftCertificate(@PathVariable int id, Model model){
+        model.addAttribute("certificate", giftCertificateDAO.readById(id));
+        return "/form_edit_gift_certificate";
     }
-
-    @GetMapping("/giftCertificates/{id}")
+//++
+    @GetMapping("/{id}")
     public String getGiftCertificate(@PathVariable int id, Model model){
         GiftCertificate giftCertificate = giftCertificateDAO.readById(id);
-        model.addAttribute(giftCertificate);
-        return "show_gift_certificate";
+        model.addAttribute("certificate", giftCertificate);
+        return "/show_gift_certificate";
     }
 
-    @PatchMapping("/giftCertificates/{id}")
+    //++
+    @PatchMapping("/{id}")
     public String updateGiftCertificate(@ModelAttribute GiftCertificate giftCertificate, @PathVariable int id){
         giftCertificateDAO.update(giftCertificate, id);
-        return "show_gift_certificates";
+        return "redirect:/gift_certificates/" + id;
     }
-
-    @DeleteMapping("/giftCertificates/{id}")
+    //++
+    @DeleteMapping("/{id}")
     public String deleteGiftCertificate(@PathVariable int id){
         giftCertificateDAO.delete(id);
-        return "show_gift_certificates";
+        return "redirect:/giftCertificates";
     }
 }

@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 
+<h1 align="center">Gift Certificates</h1>
+<div style="display: flex; justify-content: space-between">
+    <a href="/giftCertificates">All certificates</a>
+    <a href="/giftCertificates/new">Create new Certificate</a>
+    <a href="/tags/">All tags</a>
+    <a href="/tags/new">Create new tag</a>
+</div>
+
+<form th:action="@{/giftCertificates/{id}(id=${certificate.id})}" method="POST">
+    <input type="hidden" name="_method" value="PATCH">
+    <label for="name">name</label>
+    <input type="text" id="name" th:value="${certificate.name}">
+
+    <label for="description">name</label>
+    <input type="text" id="description" th:value="${certificate.description}">
+
+    <label for="price">name</label>
+    <input type="text" id="price" th:value="${certificate.price}">
+
+    <label for="duration">name</label>
+    <input type="text" id="duration" th:value="${certificate.duration}">
+
+    <input type="submit" value="Update">
+</form>
 </body>
 </html>

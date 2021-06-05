@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequestMapping(value = "/tags")
 public class TagController {
 
     private final TagDAO tagDAO;
@@ -18,45 +19,46 @@ public class TagController {
         this.tagDAO = tagDAO;
     }
 
-    @GetMapping("/tags")
+    @GetMapping
     public String getAllTags(Model model){
         List<Tag> tags = tagDAO.read();
-        model.addAttribute(tags);
-        return "";
+        model.addAttribute("tags", tags);
+        return "show_tags";
     }
 
-    @PostMapping("/tags")
+    @PostMapping
     public String createTag(@ModelAttribute Tag tag){
         tagDAO.insert(tag);
-        return "";
+        return "redirect:/tags";
     }
 
-    @GetMapping("/tags/new")
+    @GetMapping("/new")
     public String formForCreateTag(){
-        return "";
+        return "form_create_tag";
     }
 
-    @GetMapping("/tags/{id}/edit")
-    public String formForEditTag(@PathVariable int id){
-        return "";
+    @GetMapping("/{id}/edit")
+    public String formForEditTag(@PathVariable int id, Model model){
+        model.addAttribute("tag", tagDAO.readById(id));
+        return "form_edit_tag";
     }
 
-    @GetMapping("/tags/{id}")
+    @GetMapping("/{id}")
     public String getTag(@PathVariable int id, Model model){
         Tag tag = tagDAO.readById(id);
         model.addAttribute("tag", tag);
-        return "";
+        return "show_tag";
     }
 
-    @PatchMapping("/tags/{id}")
+    @PatchMapping("/{id}")
     public String updateTag(@ModelAttribute Tag tag, @PathVariable int id){
         tagDAO.update(tag, id);
-        return "";
+        return "redirect:/tags/" + id;
     }
 
-    @DeleteMapping("/tags/{id}")
+    @DeleteMapping("/{id}")
     public String deleteTag(@PathVariable int id){
-        tagDAO.delete();
-        return "";
+        tagDAO.delete(id);
+        return "redirect:" + id;
     }
 }

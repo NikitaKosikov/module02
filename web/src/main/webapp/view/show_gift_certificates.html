@@ -6,6 +6,31 @@
     <title>Title</title>
 </head>
 <body>
+<h1 align="center">Gift Certificates</h1>
+<div style="display: flex; justify-content: space-between">
+    <a href="/giftCertificates">All certificates</a>
+    <a href="/giftCertificates/new">Create new Certificate</a>
+    <a href="/tags/">All tags</a>
+    <a href="/tags/new">Create new tag</a>
+</div>
+<table>
+    <tr th:each="certificate: ${gift_certificates}">
+        <td th:text="${certificate.id}" >
+        <td th:text="${certificate.name}" >
+        <td th:text="${certificate.description}" >
+        <td th:text="${certificate.duration}"/>
+        <td th:text="${certificate.price}"/>
+        <td th:text="${certificate.createDate}" />
+        <td th:text="${certificate.lastUpdateDate}" />
+
+        <td>
+            <a th:href="@{/giftCertificates/{id}(id=${certificate.id})}">Select</a>
+        </td>
+
+    </tr>
+    <hr>
+    </th:block>
+</table>
 
 </body>
 </html>

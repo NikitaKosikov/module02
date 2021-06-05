@@ -27,7 +27,7 @@ public class SQLTagDAO implements TagDAO {
 
     @Override
     public void insert(Tag tag) {
-        jdbcTemplate.update(INSERT_TAG, tag.getName());
+        jdbcTemplate.update(INSERT_TAG, "#" + tag.getName());
     }
 
     @Override

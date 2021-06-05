@@ -13,11 +13,8 @@
     <a href="/tags/">All tags</a>
     <a href="/tags/new">Create new tag</a>
 </div>
-<form th:action="@{/giftCertificates}" th:method="POST">
+<form th:action="@{/tags}" th:method="POST">
     <input type="text" name="name">
-    <input type="text" name="description">
-    <input type="text" name="price">
-    <input type="text" name="duration">
     <input type="submit" value="Create">
 </form>
 </body>

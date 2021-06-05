@@ -13,12 +13,17 @@
     <a href="/tags/">All tags</a>
     <a href="/tags/new">Create new tag</a>
 </div>
-<form th:action="@{/giftCertificates}" th:method="POST">
-    <input type="text" name="name">
-    <input type="text" name="description">
-    <input type="text" name="price">
-    <input type="text" name="duration">
-    <input type="submit" value="Create">
+
+<div th:text="${tag.id}"/>
+<div th:text="${tag.name}"/>
+
+<form th:action="@{/tags/{id}(id=${tag.id})}" th:method="post">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Delete">
 </form>
+
+<a th:href="@{/tags/{id}/edit(id=${tag.id})}">Update</a>
+
+
 </body>
 </html>
