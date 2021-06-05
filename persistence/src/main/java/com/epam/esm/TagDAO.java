@@ -1,8 +1,11 @@
 package com.epam.esm;
 
+import java.util.List;
+
 public interface TagDAO {
-    void insert(String name);
-    void update(String name);
+    void insert(Tag tag);
+    void update(Tag tag, int id);
     void delete(int id);
-    void read();
+    List<Tag> read();
+    Tag readById(int id);
 }
