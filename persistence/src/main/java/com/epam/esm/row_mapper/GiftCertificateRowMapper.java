@@ -15,8 +15,8 @@ public class GiftCertificateRowMapper implements RowMapper<GiftCertificate> {
         giftCertificate.setDescription(rs.getString("description"));
         giftCertificate.setDuration(rs.getInt("duration"));
         giftCertificate.setPrice(rs.getBigDecimal("price"));
-        giftCertificate.setCreateDate(rs.getDate("create_date"));
-        giftCertificate.setLastUpdateDate(rs.getDate("last_update_date"));
+        giftCertificate.setCreateDate(rs.getTimestamp("create_date"));
+        giftCertificate.setLastUpdateDate(rs.getTimestamp("last_update_date"));
         return giftCertificate;
     }
 }

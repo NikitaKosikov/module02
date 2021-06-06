@@ -73,6 +73,6 @@ public class SQLGiftCertificateDAO implements GiftCertificateDAO {
     @Override
     public GiftCertificate readById(int id) {
         return jdbcTemplate.query(FIND_GIFT_CERTIFICATE_BY_ID,new Object[]{id},
-                new BeanPropertyRowMapper<>(GiftCertificate.class)).stream().findAny().orElse(null);
+                new GiftCertificateRowMapper()).stream().findAny().orElse(null);
     }
 }
