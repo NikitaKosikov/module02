@@ -77,6 +77,12 @@ public class GiftCertificateController {
         return "redirect:/giftCertificates";
     }
 
+    @PostMapping("/{id}/tags")
+    public String addTagToCertificate(@PathVariable int id,@RequestParam("name") String tagName){
+        giftCertificateService.addTag(tagName, id);
+        return "redirect:/" + id;
+    }
+
     private DateFormat getDateTimeIso8610(){
         TimeZone tz = TimeZone.getTimeZone("UTC");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
