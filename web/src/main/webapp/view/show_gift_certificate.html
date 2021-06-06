@@ -13,12 +13,15 @@
     <a href="/tags/">All tags</a>
     <a href="/tags/new">Create new tag</a>
 </div>
+<hr>
 
-<div th:text="${certificate.id}"/>
-<div th:text="${certificate.name}"/>
-<div th:text="${certificate.description}"/>
-<div th:text="${certificate.price}"/>
-<div th:text="${certificate.duration}"/>
+<span style="color:blue;">id: </span><span th:text="${certificate.id}"/>
+<span style="color:blue;">name: </span> <span th:text="${certificate.name}"/>
+<span style="color:blue;">description: </span> <span th:text="${certificate.description}"/>
+<span style="color:blue;">price: </span> <span  th:text="${certificate.price}"/>
+<span style="color:blue;">duration: </span> <span th:text="${certificate.duration}"/>
+<span style="color:blue;">create date: </span> <spanp th:text="${certificate.createDate}" />
+<span style="color:blue;">last update date: </span> <span th:text="${certificate.lastUpdateDate}"/>
 
 <form th:action="@{/giftCertificates/{id}(id=${certificate.id})}" th:method="post">
     <input type="hidden" name="_method" value="DELETE">

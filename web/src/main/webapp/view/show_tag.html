@@ -13,9 +13,9 @@
     <a href="/tags/">All tags</a>
     <a href="/tags/new">Create new tag</a>
 </div>
-
-<div th:text="${tag.id}"/>
-<div th:text="${tag.name}"/>
+<hr>
+    <span style="color:blue;">id: </span><span th:text="${tag.id}"/>
+    <span style="color:blue;">name: </span> <span th:text="${tag.name}"/>
 
 <form th:action="@{/tags/{id}(id=${tag.id})}" th:method="post">
     <input type="hidden" name="_method" value="DELETE">

@@ -13,19 +13,12 @@
     <a href="/tags/">All tags</a>
     <a href="/tags/new">Create new tag</a>
 </div>
-
-<table>
-    <tr th:each="tag: ${tags}">
-        <td th:text="${tag.id}" >
-        <td th:text="${tag.name}" >
-        <td>
-            <a th:href="@{/tags/{id}(id=${tag.id})}">Select</a>
-        </td>
-
-    </tr>
-    <hr>
-    </th:block>
-</table>
+<hr>
+<div th:each="tag: ${tags}">
+    <span style="color:blue;">id: </span><span th:text="${tag.id}"/>
+    <span style="color:blue;">name: </span> <span th:text="${tag.name}"/>
+    <a th:href="@{/tags/{id}(id=${tag.id})}">Select</a>
+</div>
 
 </body>
 </html>

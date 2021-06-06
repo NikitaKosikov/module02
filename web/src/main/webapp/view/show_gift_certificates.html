@@ -13,24 +13,17 @@
     <a href="/tags/">All tags</a>
     <a href="/tags/new">Create new tag</a>
 </div>
-<table>
-    <tr th:each="certificate: ${gift_certificates}">
-        <td th:text="${certificate.id}" >
-        <td th:text="${certificate.name}" >
-        <td th:text="${certificate.description}" >
-        <td th:text="${certificate.duration}"/>
-        <td th:text="${certificate.price}"/>
-        <td th:text="${certificate.createDate}" />
-        <td th:text="${certificate.lastUpdateDate}" />
-
-        <td>
-            <a th:href="@{/giftCertificates/{id}(id=${certificate.id})}">Select</a>
-        </td>
-
-    </tr>
-    <hr>
-    </th:block>
-</table>
+<hr>
+    <div th:each="certificate: ${gift_certificates}">
+        <span style="color:blue;">id: </span><span th:text="${certificate.id}"/>
+        <span style="color:blue;">name: </span> <span th:text="${certificate.name}"/>
+        <span style="color:blue;">description: </span> <span th:text="${certificate.description}"/>
+        <span style="color:blue;">price: </span> <span  th:text="${certificate.price}"/>
+        <span style="color:blue;">duration: </span> <span th:text="${certificate.duration}"/>
+        <span style="color:blue;">create date: </span> <spanp th:text="${certificate.createDate}" />
+        <span style="color:blue;">last update date: </span> <span th:text="${certificate.lastUpdateDate}"/>
+        <a th:href="@{/giftCertificates/{id}(id=${certificate.id})}">Select</a>
+    </div>
 
 </body>
 </html>

@@ -14,20 +14,22 @@
     <a href="/tags/">All tags</a>
     <a href="/tags/new">Create new tag</a>
 </div>
+<hr>
 
 <form th:action="@{/giftCertificates/{id}(id=${certificate.id})}" method="POST">
     <input type="hidden" name="_method" value="PATCH">
+
     <label for="name">name</label>
-    <input type="text" id="name" th:value="${certificate.name}">
+    <input type="text" id="name" name="name" th:value="${certificate.name}">
 
-    <label for="description">name</label>
-    <input type="text" id="description" th:value="${certificate.description}">
+    <label for="description">description</label>
+    <input type="text" id="description" name="description" th:value="${certificate.description}">
 
-    <label for="price">name</label>
-    <input type="text" id="price" th:value="${certificate.price}">
+    <label for="price">price</label>
+    <input type="text" id="price" name="price" th:value="${certificate.price}">
 
-    <label for="duration">name</label>
-    <input type="text" id="duration" th:value="${certificate.duration}">
+    <label for="duration">duration</label>
+    <input type="text" id="duration" name="duration" th:value="${certificate.duration}">
 
     <input type="submit" value="Update">
 </form>
