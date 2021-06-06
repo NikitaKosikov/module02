@@ -40,4 +40,12 @@ public interface GiftCertificateService {
      * @return found gift certificate.
      */
     GiftCertificate readById(int id);
+
+    /**
+     * Adding tag in database.
+     *
+     * @param id the id of the tag.
+     * @param tag the tag.
+     */
+    void addTag(int id, Tag tag);
 }

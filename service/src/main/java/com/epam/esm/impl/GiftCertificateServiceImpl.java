@@ -3,6 +3,7 @@ package com.epam.esm.impl;
 import com.epam.esm.GiftCertificate;
 import com.epam.esm.GiftCertificateDAO;
 import com.epam.esm.GiftCertificateService;
+import com.epam.esm.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -42,5 +43,10 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     @Override
     public GiftCertificate readById(int id) {
         return giftCertificateDAO.readById(id);
+    }
+
+    @Override
+    public void addTag(int id, Tag tag) {
+        giftCertificateDAO.addTag(id, tag);
     }
 }
