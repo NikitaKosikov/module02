@@ -31,7 +31,8 @@ public class GiftCertificateController {
     }
 
     @PostMapping
-    public String createGiftCertificate(@ModelAttribute GiftCertificate giftCertificate) throws ParseException {
+    public String createGiftCertificate(@ModelAttribute GiftCertificate giftCertificate,
+                                        @ModelAttribute Tag tag) throws ParseException {
         DateFormat dateFormat = getDateTimeIso8610();
         String nowDateTime = dateFormat.format(new Date());
 
