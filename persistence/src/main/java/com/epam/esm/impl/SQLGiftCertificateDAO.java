@@ -2,6 +2,7 @@ package com.epam.esm.impl;
 
 import com.epam.esm.GiftCertificate;
 import com.epam.esm.GiftCertificateDAO;
+import com.epam.esm.Tag;
 import com.epam.esm.row_mapper.GiftCertificateRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -22,6 +23,10 @@ public class SQLGiftCertificateDAO implements GiftCertificateDAO {
     private static final String INSERT_GIFT_CERTIFICATE = "INSERT INTO gift_certificate " +
             "(name, description, price, duration, create_date, last_update_date) " +
             "VALUES (?,?,?,?,?,?)";
+
+    private static final String INSERT_TAG = "INSERT INTO m2m_gift_certificate_tag " +
+            "(gift_certificate_id, tag_id) VALUES (?,?)";
+
 
     private static final String UPDATE_GIFT_CERTIFICATION = "UPDATE gift_certificate SET " +
             "name = ?, description=?, price=?, duration=?, create_date=?, last_update_date=? " +
@@ -74,5 +79,10 @@ public class SQLGiftCertificateDAO implements GiftCertificateDAO {
     public GiftCertificate readById(int id) {
         return jdbcTemplate.query(FIND_GIFT_CERTIFICATE_BY_ID,new Object[]{id},
                 new GiftCertificateRowMapper()).stream().findAny().orElse(null);
+    }
+
+    @Override
+    public void addTag(int id, Tag tag) {
+        jdbcTemplate.update(INSERT_TAG, id, tag);
     }
 }

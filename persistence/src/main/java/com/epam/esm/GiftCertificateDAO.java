@@ -8,4 +8,5 @@ public interface GiftCertificateDAO {
     void delete(int id);
     List<GiftCertificate> read();
     GiftCertificate readById(int id);
+    void addTag(int id, Tag tag);
 }
