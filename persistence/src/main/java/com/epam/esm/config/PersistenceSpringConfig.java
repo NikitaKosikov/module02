@@ -4,6 +4,7 @@ import com.epam.esm.GiftCertificateDAO;
 import com.epam.esm.TagDAO;
 import com.epam.esm.impl.SQLGiftCertificateDAO;
 import com.epam.esm.impl.SQLTagDAO;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,18 +18,20 @@ import javax.sql.DataSource;
 public class PersistenceSpringConfig {
 
     @Bean
-    public DataSource beanDataSource(){
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/module_2");
-        dataSource.setUsername("Nikita");
-        dataSource.setPassword("knyazrek2");
-        return dataSource;
+    public DataSource beanBasicDataSource(){
+        BasicDataSource basicDataSource = new BasicDataSource();
+        basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        basicDataSource.setUrl("jdbc:mysql://localhost:3306/module_2");
+        basicDataSource.setUsername("Nikita");
+        basicDataSource.setPassword("knyazrek2");
+        basicDataSource.setMaxActive(10);
+        basicDataSource.setInitialSize(5);
+        return basicDataSource;
     }
 
     @Bean
     public JdbcTemplate beanJdbcTemplate(){
-        return new JdbcTemplate(beanDataSource());
+        return new JdbcTemplate(beanBasicDataSource());
     }
 
     @Bean
