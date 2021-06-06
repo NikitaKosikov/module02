@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
 
@@ -35,8 +35,13 @@ public class PersistenceSpringConfig {
     }
 
     @Bean
+    public SimpleJdbcInsert simpleJdbcInsert(){
+        return new SimpleJdbcInsert(beanBasicDataSource()).withTableName("tag").usingGeneratedKeyColumns("id");
+    }
+
+    @Bean
     public GiftCertificateDAO beanSQLGiftCertificateDAO(){
-        return new SQLGiftCertificateDAO(beanJdbcTemplate());
+        return new SQLGiftCertificateDAO(beanJdbcTemplate(), simpleJdbcInsert());
     }
 
     @Bean

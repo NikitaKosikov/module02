@@ -78,9 +78,9 @@ public class GiftCertificateController {
     }
 
     @PostMapping("/{id}/tags")
-    public String addTagToCertificate(@PathVariable int id,@RequestParam("name") String tagName){
-        giftCertificateService.addTag(tagName, id);
-        return "redirect:/" + id;
+    public String addTagToCertificate(@PathVariable int id,@ModelAttribute Tag tag){
+        giftCertificateService.addTag(id, tag);
+        return "redirect:/giftCertificates/" + id;
     }
 
     private DateFormat getDateTimeIso8610(){

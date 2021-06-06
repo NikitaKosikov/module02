@@ -7,16 +7,21 @@ import com.epam.esm.row_mapper.GiftCertificateRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class SQLGiftCertificateDAO implements GiftCertificateDAO {
 
     private static final String FIND_ALL_GIFT_CERTIFICATE = "SELECT * FROM gift_certificate";
+
+    private static final String FIND_TAG_BY_NAME = "SELECT * FROM tag where name=?";
 
     private static final String FIND_GIFT_CERTIFICATE_BY_ID = "SELECT * FROM gift_certificate WHERE id =?";
 
@@ -24,8 +29,11 @@ public class SQLGiftCertificateDAO implements GiftCertificateDAO {
             "(name, description, price, duration, create_date, last_update_date) " +
             "VALUES (?,?,?,?,?,?)";
 
-    private static final String INSERT_TAG = "INSERT INTO m2m_gift_certificate_tag " +
+    private static final String BLIND_GIFT_CERTIFICATE_WITH_TAG = "INSERT INTO m2m_gift_certificate_tag " +
             "(gift_certificate_id, tag_id) VALUES (?,?)";
+
+    private static final String INSERT_TAG = "INSERT INTO tag " +
+            "(name) VALUES (?)";
 
 
     private static final String UPDATE_GIFT_CERTIFICATION = "UPDATE gift_certificate SET " +
@@ -36,9 +44,12 @@ public class SQLGiftCertificateDAO implements GiftCertificateDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
+    private final SimpleJdbcInsert simpleJdbcInsert;
+
     @Autowired
-    public SQLGiftCertificateDAO(JdbcTemplate jdbcTemplate) {
+    public SQLGiftCertificateDAO(JdbcTemplate jdbcTemplate, SimpleJdbcInsert simpleJdbcInsert) {
         this.jdbcTemplate = jdbcTemplate;
+        this.simpleJdbcInsert = simpleJdbcInsert;
     }
 
     @Override
@@ -83,6 +94,17 @@ public class SQLGiftCertificateDAO implements GiftCertificateDAO {
 
     @Override
     public void addTag(int id, Tag tag) {
-        jdbcTemplate.update(INSERT_TAG, id, tag);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", "#" + tag.getName());
+        Tag dbTag = jdbcTemplate.query(FIND_TAG_BY_NAME, new Object[]{tag.getName()}, new BeanPropertyRowMapper<>(Tag.class))
+                .stream().findAny().orElse(null);
+        Number tagId;
+        if (dbTag == null) {
+            tagId = simpleJdbcInsert.executeAndReturnKey(parameters);
+        }else {
+            tagId = dbTag.getId();
+        }
+        jdbcTemplate.update(BLIND_GIFT_CERTIFICATE_WITH_TAG, id, tagId);
+
     }
 }

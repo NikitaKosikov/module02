@@ -32,7 +32,7 @@
 
 <form th:action="@{/giftCertificates/{id}/tags(id=${certificate.id})}" method="post">
     <label for="name">Tag name</label>
-    <input id="name" type="text">
+    <input id="name" name="name" type="text">
     <input type="submit" value="Add tag">
 </form>
 
