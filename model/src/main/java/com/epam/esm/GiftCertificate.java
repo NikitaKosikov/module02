@@ -1,8 +1,11 @@
 package com.epam.esm;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
+@DynamicUpdate
 public class GiftCertificate {
     private int id;
     private String name;
