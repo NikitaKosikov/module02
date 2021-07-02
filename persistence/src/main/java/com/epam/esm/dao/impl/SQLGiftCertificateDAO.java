@@ -1,8 +1,8 @@
-package com.epam.esm.impl;
+package com.epam.esm.service;
 
-import com.epam.esm.GiftCertificate;
-import com.epam.esm.GiftCertificateDAO;
-import com.epam.esm.Tag;
+import com.epam.esm.entity.GiftCertificate;
+import com.epam.esm.dao.GiftCertificateDAO;
+import com.epam.esm.entity.Tag;
 import com.epam.esm.row_mapper.GiftCertificateRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -20,6 +20,12 @@ import java.util.Map;
 public class SQLGiftCertificateDAO implements GiftCertificateDAO {
 
     private static final String FIND_ALL_GIFT_CERTIFICATE = "SELECT * FROM gift_certificate";
+
+    private static final String FIND_ALL_GIFT_CERTIFICATE_BY_TAG_NAME = "SELECT * FROM m2m_gift_certificate_tag " +
+            "JOIN gift_certificate gc on gc.id = m2m_gift_certificate_tag.gift_certificate_id " +
+            "JOIN tag t on t.id = m2m_gift_certificate_tag.tag_id " +
+            "WHERE t.name=? OR gc.name Like ? OR gc.description LIKE ? " +
+            "ORDER BY gc.name";
 
     private static final String FIND_TAG_BY_NAME = "SELECT * FROM tag where name=?";
 
@@ -65,13 +71,20 @@ public class SQLGiftCertificateDAO implements GiftCertificateDAO {
     }
 
     @Override
-    public void update(GiftCertificate giftCertificate, int id) {
+    public void update(GiftCertificate giftCertificate, int id, String tagName) {
         String name = giftCertificate.getName();
         String description = giftCertificate.getDescription();
         BigDecimal price = giftCertificate.getPrice();
         int duration = giftCertificate.getDuration();
         Date createDate = giftCertificate.getCreateDate();
         Date lastUpdateDate = giftCertificate.getLastUpdateDate();
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", "#" + tagName);
+
+        if (!isExistTag(tagName)){
+            simpleJdbcInsert.executeAndReturnKey(parameters);
+        }
 
         jdbcTemplate.update(UPDATE_GIFT_CERTIFICATION, name, description, price, duration, createDate, lastUpdateDate, id);
     }
@@ -98,6 +111,7 @@ public class SQLGiftCertificateDAO implements GiftCertificateDAO {
         parameters.put("name", "#" + tag.getName());
         Tag dbTag = jdbcTemplate.query(FIND_TAG_BY_NAME, new Object[]{tag.getName()}, new BeanPropertyRowMapper<>(Tag.class))
                 .stream().findAny().orElse(null);
+
         Number tagId;
         if (dbTag == null) {
             tagId = simpleJdbcInsert.executeAndReturnKey(parameters);
@@ -106,5 +120,17 @@ public class SQLGiftCertificateDAO implements GiftCertificateDAO {
         }
         jdbcTemplate.update(BLIND_GIFT_CERTIFICATE_WITH_TAG, id, tagId);
 
+    }
+
+    @Override
+    public List<GiftCertificate> findCertificatesByTagName(String tagName) {
+        return jdbcTemplate.query(FIND_ALL_GIFT_CERTIFICATE_BY_TAG_NAME,
+                new Object[]{tagName,'%' + tagName + '%','%' + tagName + '%'}, new GiftCertificateRowMapper());
+    }
+
+    private boolean isExistTag(String tagName){
+        Tag dbTag = jdbcTemplate.query(FIND_TAG_BY_NAME, new Object[]{tagName}, new BeanPropertyRowMapper<>(Tag.class))
+                .stream().findAny().orElse(null);
+        return dbTag != null;
     }
 }

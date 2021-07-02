@@ -1,4 +1,7 @@
-package com.epam.esm;
+package com.epam.esm.service;
+
+import com.epam.esm.entity.GiftCertificate;
+import com.epam.esm.entity.Tag;
 
 import java.util.List;
 
@@ -16,8 +19,9 @@ public interface GiftCertificateService {
      *
      * @param giftCertificate the gift certificate.
      * @param id the id of the gift certificate.
+     * @param tagName the name of tag.
      */
-    void update(GiftCertificate giftCertificate, int id);
+    void update(GiftCertificate giftCertificate, int id, String tagName);
 
     /**
      * Delete the gift certificate by specific id.
@@ -48,4 +52,6 @@ public interface GiftCertificateService {
      * @param tag the tag.
      */
     void addTag(int id, Tag tag);
+
+    List<GiftCertificate> findCertificatesByTagName(String tagName);
 }

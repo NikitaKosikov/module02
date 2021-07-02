@@ -1,7 +1,7 @@
-package com.epam.esm.impl;
+package com.epam.esm.service;
 
-import com.epam.esm.Tag;
-import com.epam.esm.TagDAO;
+import com.epam.esm.entity.Tag;
+import com.epam.esm.dao.TagDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,7 +27,7 @@ public class SQLTagDAO implements TagDAO {
 
     @Override
     public void insert(Tag tag) {
-        jdbcTemplate.update(INSERT_TAG, "#" + tag.getName());
+        jdbcTemplate.update(INSERT_TAG, tag.getName());
     }
 
     @Override

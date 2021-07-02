@@ -1,9 +1,9 @@
-package com.epam.esm.impl;
+package com.epam.esm.service.impl;
 
-import com.epam.esm.GiftCertificate;
-import com.epam.esm.GiftCertificateDAO;
-import com.epam.esm.GiftCertificateService;
-import com.epam.esm.Tag;
+import com.epam.esm.entity.GiftCertificate;
+import com.epam.esm.dao.GiftCertificateDAO;
+import com.epam.esm.service.GiftCertificateService;
+import com.epam.esm.entity.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -26,8 +26,8 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public void update(GiftCertificate giftCertificate, int id) {
-        giftCertificateDAO.update(giftCertificate, id);
+    public void update(GiftCertificate giftCertificate, int id, String tagName) {
+        giftCertificateDAO.update(giftCertificate, id, tagName);
     }
 
     @Override
@@ -48,5 +48,10 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     @Override
     public void addTag(int id, Tag tag) {
         giftCertificateDAO.addTag(id, tag);
+    }
+
+    @Override
+    public List<GiftCertificate> findCertificatesByTagName(String tagName) {
+        return giftCertificateDAO.findCertificatesByTagName(tagName);
     }
 }
