@@ -1,18 +1,10 @@
-plugins {
-    id 'java'
-}
-
 group 'org.example'
 version '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
-    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.7'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.11.0'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.11.0'
+    implementation group: 'org.springframework', name: 'spring-tx', version: '5.3.8'
     implementation project(':model')
     implementation project(':persistence')
 }

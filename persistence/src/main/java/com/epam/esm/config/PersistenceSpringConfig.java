@@ -1,52 +1,53 @@
 package com.epam.esm.config;
 
-import com.epam.esm.GiftCertificateDAO;
-import com.epam.esm.TagDAO;
-import com.epam.esm.impl.SQLGiftCertificateDAO;
-import com.epam.esm.impl.SQLTagDAO;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("com.epam.esm")
+@PropertySource("classpath:db.properties")
 public class PersistenceSpringConfig {
+
+    @Value("${driver}")
+    private String driverClassName;
+
+    @Value("${url}")
+    private String url;
+
+    @Value("${usernameDB}")
+    private String usernameDB;
+
+    @Value("${password}")
+    private String password;
+
+    @Value("${maxactive}")
+    private int maxActive;
+
+    @Value("${initialsize}")
+    private int initialSize;
 
     @Bean
     public DataSource beanBasicDataSource(){
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        basicDataSource.setUrl("jdbc:mysql://localhost:3306/module_2");
-        basicDataSource.setUsername("Nikita");
-        basicDataSource.setPassword("knyazrek2");
-        basicDataSource.setMaxActive(10);
-        basicDataSource.setInitialSize(5);
+        basicDataSource.setDriverClassName(driverClassName);
+        basicDataSource.setUrl(url);
+        basicDataSource.setUsername(usernameDB);
+        basicDataSource.setPassword(password);
+        basicDataSource.setMaxActive(maxActive);
+        basicDataSource.setInitialSize(initialSize);
         return basicDataSource;
     }
 
     @Bean
     public JdbcTemplate beanJdbcTemplate(){
         return new JdbcTemplate(beanBasicDataSource());
-    }
-
-    @Bean
-    public SimpleJdbcInsert simpleJdbcInsert(){
-        return new SimpleJdbcInsert(beanBasicDataSource()).withTableName("tag").usingGeneratedKeyColumns("id");
-    }
-
-    @Bean
-    public GiftCertificateDAO beanSQLGiftCertificateDAO(){
-        return new SQLGiftCertificateDAO(beanJdbcTemplate(), simpleJdbcInsert());
-    }
-
-    @Bean
-    public TagDAO beanSQLTagDAO(){
-        return new SQLTagDAO(beanJdbcTemplate());
     }
 
 }

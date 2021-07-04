@@ -1,14 +1,31 @@
-plugins {
-    id 'java'
-}
+group 'com.epam.esm'
+version '1.0'
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+subprojects {
+    apply plugin: 'java'
 
-repositories {
-    mavenCentral()
-}
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    ext {
+        springVersion = '5.3.7'
+        junitVersion = '5.8.0-M1'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testImplementation "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+        testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+        testImplementation group: 'org.springframework', name: 'spring-test', version: '5.3.8'
+        testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.8.0'
+        implementation "org.springframework:spring-context:$springVersion"
+        implementation "org.springframework:spring-core:$springVersion"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
 }

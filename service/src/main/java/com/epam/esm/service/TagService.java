@@ -7,39 +7,56 @@ import java.util.List;
 public interface TagService {
 
     /**
-     * Insert tag in database.
+     * Create new tag
      *
-     * @param tag the tag.
+     * @param tag the tag which will be created
+     * @return created tag
      */
-    void insert(Tag tag);
+    Tag insert(Tag tag);
 
     /**
-     *Update tag in database by specific id.
+     * Update tag
      *
-     * @param tag the tag.
-     * @param id the id of the tag.
+     * @param tag the new tag which will be created
+     * @param id the id of tag which should be updated
      */
-    void update(Tag tag, int id);
+    void update(Tag tag, long id);
 
     /**
-     * Delete the tag by specific id.
+     * Delete tag by id
      *
-     * @param id the id of the tag.
+     * @param id the id of tag which will be delete
      */
-    void delete(int id);
+    void delete(long id);
 
     /**
-     * Looking for a set of tags.
+     * Looking for all tags
      *
-     * @return set of found tags.
+     * @return the found list of tags
      */
     List<Tag> read();
 
     /**
-     * Looking for the tag by specific id.
+     * Looking for tag by id
      *
-     * @param id the id of tag.
-     * @return found tag.
+     * @param id the id of tag
+     * @return the found tag
      */
-    Tag readById(int id);
+    Tag readById(long id);
+
+    /**
+     * Looking for  tag by name
+     *
+     * @param tagName the name of tag by which we are looking for tag
+     * @return the found tag
+     */
+    Tag findTagByName(String tagName);
+
+    /**
+     * Looking for  all tags by specific gift certificate
+     * @param id the id of gift certificate
+     * @return the found list of tags
+     */
+    List<Tag> readByCertificateId(long id);
+
 }
