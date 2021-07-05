@@ -5,6 +5,7 @@ import com.epam.esm.entity.Tag;
 import com.epam.esm.service.GiftCertificateService;
 import com.epam.esm.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class GiftCertificateController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public GiftCertificate createGiftCertificate(@RequestBody GiftCertificate giftCertificate,
                                         @RequestParam("tagName") String tagName){
         Tag tag = new Tag(tagName);
@@ -47,6 +49,7 @@ public class GiftCertificateController {
     }
 
     @DeleteMapping("/{certificateId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteGiftCertificate(@PathVariable int certificateId){
         giftCertificateService.delete(certificateId);
     }
@@ -57,6 +60,7 @@ public class GiftCertificateController {
     }
 
     @PostMapping("/{certificateId}/tags")
+    @ResponseStatus(HttpStatus.CREATED)
     public void addTagToCertificate(@PathVariable int certificateId,@RequestBody Tag tag){
         giftCertificateService.addTag(certificateId, tag);
     }
@@ -82,6 +86,7 @@ public class GiftCertificateController {
     }
 
     @DeleteMapping("/{certificateId}/tags/{tagId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTag(@PathVariable int certificateId, @PathVariable int tagId){
         giftCertificateService.deleteCertificateTagById(certificateId,tagId);
     }

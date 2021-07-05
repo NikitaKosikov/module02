@@ -3,6 +3,7 @@ package com.epam.esm.controller;
 import com.epam.esm.entity.Tag;
 import com.epam.esm.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ public class TagController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Tag createTag(@RequestBody Tag tag){
         return tagService.insert(tag);
     }
@@ -41,6 +43,7 @@ public class TagController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTag(@PathVariable int id){
         tagService.delete(id);
     }
